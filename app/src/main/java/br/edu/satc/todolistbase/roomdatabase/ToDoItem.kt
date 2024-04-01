@@ -12,4 +12,6 @@ import androidx.room.PrimaryKey
 data class ToDoItem(
     @PrimaryKey val uid: Int,
     @ColumnInfo(name = "description") val description: String?
+
+    //AQUI ACRESCENTAR MAIS COLUNAS
 ) {}

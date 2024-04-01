@@ -24,7 +24,6 @@ class ToDoItemAdapter (
             .inflate(R.layout.rv_item, viewGroup, false)
         return ViewHolder(view)
     }
-
     /**
      * onBindViewHolder será chamado sempre que nosso RecyclerView.Adapter estiver "carregando dados"
      * de nossa lista para uma posição do Recycler View que está na tela.
@@ -36,13 +35,10 @@ class ToDoItemAdapter (
      * ler informações, disparos de clicks, etc.
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
         // Pegamos o item em nossa lista que deve ser "montado" nessa view
         var toDoItem: ToDoItem = dataSet[position]
-
         // Preenchemos os dados desse item na tela
         holder.tvDescription.text = toDoItem.description
-
         // Declaramos um listener para pegarmos o evento de click na lista
         holder.itemView.setOnClickListener {
             /**
@@ -54,7 +50,6 @@ class ToDoItemAdapter (
             itemOnClick(position, toDoItem)
         }
     }
-
     /**
      * em getItemCount precisamos informar ao nosso RecyclerView.Adapter (classe pai) quantos
      * items existem em nossa lista
@@ -62,7 +57,6 @@ class ToDoItemAdapter (
     override fun getItemCount(): Int {
         return dataSet.size
     }
-
     /**
      * RecyclerView.ViewHolder responsável por "guardar" as referências das views
      * de cada item de nossa lista. Assim podemos usar essas referências para

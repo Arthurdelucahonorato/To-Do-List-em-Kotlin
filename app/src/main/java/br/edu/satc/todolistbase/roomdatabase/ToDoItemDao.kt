@@ -14,16 +14,12 @@ interface ToDoItemDao {
      *
      * Monte a lógica SQL usando a declaração @Query e utilize parâmetros conforme os exemplos
      */
-
     @Query("SELECT * FROM todoitens WHERE uid = :uid")
     fun getToDoItem(uid: String): ToDoItem
-
     @Query("SELECT * FROM todoitens")
     fun getAll(): List<ToDoItem>
-
     @Insert
     fun insertAll(vararg items: ToDoItem)
-
     @Delete
     fun delete(item: ToDoItem)
 }
