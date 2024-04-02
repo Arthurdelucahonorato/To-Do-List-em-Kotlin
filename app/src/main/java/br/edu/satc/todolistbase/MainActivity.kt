@@ -1,11 +1,13 @@
 package br.edu.satc.todolistbase
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
+import androidx.room.Update
 import br.edu.satc.todolistbase.data.ToDoItemAdapter
 import br.edu.satc.todolistbase.roomdatabase.AppDatabase
 import br.edu.satc.todolistbase.roomdatabase.ToDoItem
@@ -26,27 +28,34 @@ class MainActivity : AppCompatActivity() {
 
         initRecyclerViewAdapter()
 
-        loadData()
+
 
         // Pega a referência de nosso botão FloatActionButton e seu click
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
 
+            startActivity(Intent(this, MainActivity2::class.java))
+
             // Inclusao fake. Add um item na lista
             // cria o item
-            val item = ToDoItem(
-                toDoItemList.size,
-                "Item de teste ${toDoItemList.size + 1}"
-            )
+            //val item = ToDoItem(
+                //toDoItemList.size,
+                //"Item de teste ${toDoItemList.size + 1}"
+            //)
 
             // add o item na lista
-            toDoItemList.add(item)
+           // toDoItemList.add(item)
 
             // informa o adapter que houve uma atualizacao na lista para ele refletir isso em tela
-            toDoItemAdapter.notifyItemChanged(toDoItemList.size-1)
+            //toDoItemAdapter.notifyItemChanged(toDoItemList.size-1)
 
             // Salva no banco de dados
-            db.toDoItemDao().insertAll(item)
+            //db.toDoItemDao().insertAll(item)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        loadData()
     }
 
     /**
@@ -95,15 +104,26 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, "Click pos: $position | desc: ${item.description}")
         }
 
+        // Prepara nosso método de click em um item da lista
+        val itemOnChecked: (Boolean, ToDoItem) -> Unit = { isChecked, item ->
+            Log.d(TAG, "Click pos: $isChecked | desc: ${item.title}")
+        }
+
         // Instancia o adapter passando a lista e o método que será disparado no click de item
-        toDoItemAdapter = ToDoItemAdapter(toDoItemList, itemOnClick)
+        toDoItemAdapter = ToDoItemAdapter(toDoItemList, itemOnChecked ,itemOnClick)
 
         // Informa nosso recycler view qual adapter irá cuidar de seus dados
         rv.adapter = toDoItemAdapter
 
     }
 
+
+    private fun updateItem (toDoItem: ToDoItem) {
+        //Atualiza o item do banco
+
+    }
     private fun loadData() {
+        toDoItemList.clear()
         toDoItemList.addAll(db.toDoItemDao().getAll() as ArrayList<ToDoItem>)
         toDoItemAdapter.notifyDataSetChanged()
     }

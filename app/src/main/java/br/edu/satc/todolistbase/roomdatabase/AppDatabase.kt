@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
  * A classe AppDatabase define a configuração do banco de dados e serve como o ponto de acesso
  * principal do app aos dados persistidos.
  */
-@Database(entities = [ToDoItem::class], version = 1)
+@Database(entities = [ToDoItem::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun toDoItemDao(): ToDoItemDao
 }

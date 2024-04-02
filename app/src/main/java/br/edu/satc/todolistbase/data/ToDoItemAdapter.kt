@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.edu.satc.todolistbase.R
@@ -11,6 +12,7 @@ import br.edu.satc.todolistbase.roomdatabase.ToDoItem
 
 class ToDoItemAdapter (
     private val dataSet: ArrayList<ToDoItem>,
+    private val itemOnChecked: (Boolean, ToDoItem) -> Unit,
     private val itemOnClick: (Int, ToDoItem) -> Unit,
 ) : RecyclerView.Adapter<ToDoItemAdapter.ViewHolder>() {
 
@@ -38,7 +40,12 @@ class ToDoItemAdapter (
         // Pegamos o item em nossa lista que deve ser "montado" nessa view
         var toDoItem: ToDoItem = dataSet[position]
         // Preenchemos os dados desse item na tela
+        holder.tvTitle.text = toDoItem.title
         holder.tvDescription.text = toDoItem.description
+        holder.cbComplete.isActivated = toDoItem.complete == true
+        holder.cbComplete.setOnCheckedChangeListener {buttonView,isChecked ->
+            itemOnChecked(isChecked, toDoItem)
+        }
         // Declaramos um listener para pegarmos o evento de click na lista
         holder.itemView.setOnClickListener {
             /**
@@ -65,10 +72,15 @@ class ToDoItemAdapter (
      * Aqui devemos usar findViewById para referenciar os itens em rv_item.xml
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        var tvTitle:  TextView
         var tvDescription: TextView
+        var cbComplete : CheckBox
 
         init {
             tvDescription = view.findViewById(R.id.tv_description)
+            tvTitle = view.findViewById(R.id.tv_title)
+            cbComplete = view.findViewById(R.id.tv_checkBox)
+
         }
     }
 }
