@@ -13,7 +13,7 @@ data class ToDoItem(
     @PrimaryKey (autoGenerate = true) val uid: Int?,
     @ColumnInfo(name = "description") val description: String?,
     @ColumnInfo(name = "title") val title: String?,
-    @ColumnInfo(name = "complete") val complete: Boolean?,
+    @ColumnInfo(name = "complete") var complete: Boolean?,
 
     //AQUI ACRESCENTAR MAIS COLUNAS
 ) {}

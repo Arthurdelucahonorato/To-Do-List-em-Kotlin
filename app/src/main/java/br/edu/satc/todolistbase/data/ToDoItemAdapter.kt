@@ -42,7 +42,7 @@ class ToDoItemAdapter (
         // Preenchemos os dados desse item na tela
         holder.tvTitle.text = toDoItem.title
         holder.tvDescription.text = toDoItem.description
-        holder.cbComplete.isActivated = toDoItem.complete == true
+        holder.cbComplete.isChecked = toDoItem.complete == true
         holder.cbComplete.setOnCheckedChangeListener {buttonView,isChecked ->
             itemOnChecked(isChecked, toDoItem)
         }

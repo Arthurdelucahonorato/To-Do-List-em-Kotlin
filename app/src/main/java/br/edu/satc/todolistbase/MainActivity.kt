@@ -107,8 +107,9 @@ class MainActivity : AppCompatActivity() {
         // Prepara nosso método de click em um item da lista
         val itemOnChecked: (Boolean, ToDoItem) -> Unit = { isChecked, item ->
             Log.d(TAG, "Click pos: $isChecked | desc: ${item.title}")
+            item.complete = isChecked
+            updateItem (item)
         }
-
         // Instancia o adapter passando a lista e o método que será disparado no click de item
         toDoItemAdapter = ToDoItemAdapter(toDoItemList, itemOnChecked ,itemOnClick)
 
@@ -116,11 +117,9 @@ class MainActivity : AppCompatActivity() {
         rv.adapter = toDoItemAdapter
 
     }
-
-
     private fun updateItem (toDoItem: ToDoItem) {
         //Atualiza o item do banco
-
+        db.toDoItemDao().updateToDoItem(toDoItem)
     }
     private fun loadData() {
         toDoItemList.clear()
